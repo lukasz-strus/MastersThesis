@@ -24,20 +24,18 @@
 % Strona tytułowa
 %--------------------------------------
 \MasterThesis % Dla pracy inżynierskiej mamy \EngineerThesis
-\instytut{XXXXXX}
-\kierunek{XXXXXX}
-\specjalnosc{XXXXXX}
+\instytut{Instytut Automatyki i Informatyki Stosowane}
+\kierunek{Informatyka}
+\specjalnosc{Systemy Internetowe Wspomagania Zarządzania}
 \title{
-    Niepotrzebnie długi i skomplikowany tytuł pracy \\
-    trudny do przeczytania, zrozumienia i wymówienia
+    Automatyzacja implementacji wzorców Domain-Driven Design z wykorzystaniem generatorów kodu
 }
 \engtitle{ % Tytuł po angielsku do angielskiego streszczenia
-    Unnecessarily long and complicated thesis' title \\
-    difficult to read, understand and pronounce
+    Automation of Domain-Driven Design patterns implementation using code generators
 }
-\author{\{Imię i Nazwisko\}}
-\album{XXXXXX}
-\promotor{XXXXXX}
+\author{Łukasz Strus}
+\album{334947}
+\promotor{dr inż. Krzysztof Madziar}
 \date{\the\year}
 \maketitle
 
@@ -45,22 +43,32 @@
 % Streszczenie po polsku
 %--------------------------------------
 \cleardoublepage % Zaczynamy od nieparzystej strony
-\streszczenie \lipsum[1-3]
-\slowakluczowe XXX, XXX, XXX
+\streszczenie Celem niniejszej pracy magisterskiej jest opracowanie i implementacja generatora kodu automatyzującego proces tworzenia aplikacji zgodnych z zasadami Domain-Driven Design (DDD) oraz Clean Architecture w środowisku .NET. W ramach pracy zaprojektowano narzędzie oparte na technologii Roslyn, umożliwiające generowanie kluczowych komponentów warstwy domenowej, takich jak encje, obiekty wartościowe oraz korzenie agregatów.
+
+Dodatkowo opracowano bibliotekę zawierającą gotowe implementacje fundamentalnych elementów DDD, które mogą być wielokrotnie wykorzystywane w różnych projektach. Ważnym aspektem pracy było również stworzenie mechanizmu generowania szkieletów aplikacji zgodnych z Clean Architecture, co pozwala programistom na szybkie rozpoczęcie prac nad nowymi projektami z zachowaniem spójnej struktury i najlepszych praktyk inżynierii oprogramowania.
+
+Efektem pracy jest kompletne rozwiązanie wspierające zespoły programistyczne w efektywnym wdrażaniu DDD, redukujące ilość powtarzalnego kodu oraz zwiększające czytelność i utrzymywalność aplikacji tworzonych w technologii .NET.
+\slowakluczowe Domain-Driven Design, Czysta architektura, Generatory kodu
 
 %--------------------------------------
 % Streszczenie po angielsku
 %--------------------------------------
 \newpage
-\abstract \kant[1-3]
-\keywords XXX, XXX, XXX
+\abstract The aim of this master's thesis is to develop and implement a code generator that automates the process of creating applications compliant with the principles of Domain-Driven Design (DDD) and Clean Architecture in the .NET environment. As part of the thesis, a tool based on Roslyn technology was designed to generate key components of the domain layer, such as entities, value objects, and aggregate roots.
+
+In addition, a library was developed containing ready-made implementations of fundamental DDD elements that can be reused in various projects. An important aspect of the thesis was also the creation of a mechanism for generating application skeletons compliant with Clean Architecture, which allows developers to quickly start working on new projects while maintaining a consistent structure and best practices in software engineering.
+
+The result of this work is a complete solution that supports development teams in the effective implementation of DDD, reducing the amount of repetitive code and increasing the readability and maintainability of applications created in .NET technology.
+
+Translated with DeepL.com (free version)
+\keywords Domain-Driven Design, Clean Architecture, Code Generators
 
 %--------------------------------------
 % Oświadczenie o autorstwie
 %--------------------------------------
-\cleardoublepage  % Zaczynamy od nieparzystej strony
-\pagestyle{plain}
-\makeauthorship
+% \cleardoublepage  % Zaczynamy od nieparzystej strony
+% \pagestyle{plain}
+% \makeauthorship
 
 %--------------------------------------
 % Spis treści
@@ -74,14 +82,14 @@
 \cleardoublepage % Zaczynamy od nieparzystej strony
 \pagestyle{headings}
 
-\input{tex/1-wstep}         % Wygodnie jest trzymać każdy rozdział w osobnym pliku.
-\input{tex/2-de-finibus}    % Umożliwia to również łatwą migrację do nowej wersji szablonu:
-\input{tex/3-code-listings} % wystarczy podmienić swoje pliki main.tex i eiti-thesis.cls
-                            % na nowe wersje, a cały tekst pracy pozostaje nienaruszony.
+\input{tex/1-wstep}  
+\input{tex/2-wprowadzenie-teoretyczne}
+\input{tex/3-analiza-problemu-i-założeń-projektowych}
+\input{tex/4-projekt-rozwiązania}
+\input{tex/5-implementacja-rozwiazania}
+\input{tex/6-weryfikacja-i-ocena-rozwiazania}
+\input{tex/7-podsumowanie-i-kierunki-dalszego-rozwoju}
 
-\newpage % Rozdziały zaczynamy od nowej strony
-\section{Summatio}          % Można też pisać rozdziały w jednym pliku.
-\lipsum[5-10]
 
 %--------------------------------------------
 % Literatura
@@ -107,24 +115,22 @@
 % //AB
 \vspace{0.8cm}
 \acronymlist
-\acronym{EiTI}{Wydział Elektroniki i Technik Informacyjnych}
-\acronym{PW}{Politechnika Warszawska}
-\acronym{WEIRD}{ang. \emph{Western, Educated, Industrialized, Rich and Democratic}}
+\acronym{DDD}{Domain-Driven Design}
 
-\listoffigurestoc     % Spis rysunków.
-\vspace{1cm}          % vertical space
-\listoftablestoc      % Spis tabel.
-\vspace{1cm}          % vertical space
-\listofappendicestoc  % Spis załączników
+% \listoffigurestoc     % Spis rysunków.
+% \vspace{1cm}          % vertical space
+% \listoftablestoc      % Spis tabel.
+% \vspace{1cm}          % vertical space
+% \listofappendicestoc  % Spis załączników
 
-% Załączniki
-\newpage
-\appendix{Nazwa załącznika 1}
-\lipsum[1-8]
+% % Załączniki
+% \newpage
+% \appendix{Nazwa załącznika 1}
+% \lipsum[1-8]
 
-\newpage
-\appendix{Nazwa załącznika 2}
-\lipsum[1-4]
+% \newpage
+% \appendix{Nazwa załącznika 2}
+% \lipsum[1-4]
 
 % Używając powyższych spisów jako szablonu,
 % możesz tu dodać swój własny wykaz bądź listę,

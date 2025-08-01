@@ -1,15 +1,11 @@
-\newpage % Rozdziały zaczynamy od nowej strony.
-\section{Praefatio}
-\lipsum[1] \cite{goossens93}
-\begin{figure}[!h]
-    \label{fig:tradycyjne-logo-pw}
-    \centering \includegraphics[width=0.5\linewidth]{logopw.png}
-    \caption{Tradycyjne godło Politechniki Warszawskiej}
-\end{figure}
-\lipsum[2-3]
-\begin{figure}[!h]
-	\label{fig:nowe-logo-pw}
-	\centering \includegraphics[width=0.5\linewidth]{logopw2.png}
-	\caption{Współczesne logo Politechniki Warszawskiej}
-\end{figure}
-\lipsum[4-6]
+\newpage
+\section{Wstęp}
+Dynamiczny rozwój technologii informatycznych oraz rosnąca złożoność systemów biznesowych sprawiają, że kluczowym wyzwaniem w tworzeniu oprogramowania staje się utrzymanie wysokiej jakości kodu oraz jego łatwej rozbudowy i konserwacji. W odpowiedzi na te potrzeby coraz większą popularność zdobywają podejścia architektoniczne, takie jak Domain-Driven Design (DDD) \cite{evans2004domain} oraz Clean Architecture \cite{unclebob2018cleanarchitecture}, które promują wyraźny podział odpowiedzialności, silne modelowanie domeny oraz elastyczność w rozwijaniu systemów.
+
+Implementacja aplikacji w oparciu o te paradygmaty wymaga jednak znacznej liczby powtarzalnych czynności – tworzenia struktur projektowych, definiowania podstawowych klas i interfejsów czy utrzymywania spójności warstw systemu. Proces ten, choć niezbędny, jest czasochłonny i podatny na błędy, zwłaszcza w początkowej fazie projektu.
+
+Celem niniejszej pracy magisterskiej jest stworzenie narzędzia, które zautomatyzuje kluczowe elementy wdrażania DDD w technologii .NET, eliminując konieczność ręcznego tworzenia powtarzalnych struktur. Opracowany generator kodu oparty na Roslyn \cite{microsoft2024roslyn} umożliwi automatyczne generowanie klas domenowych, a także szkieletów aplikacji zgodnych z zasadami Clean Architecture \cite{unclebob2018cleanarchitecture}.
+
+Dodatkowo, w ramach pracy powstała biblioteka fundamentalnych komponentów DDD (m.in. Entity, ValueObject, AggregateRoot) \cite{evans2004domain}, które stanowią solidną podstawę do tworzenia nowych systemów i mogą być wykorzystywane w wielu projektach. Dzięki temu rozwiązaniu programiści otrzymują spójne i powtarzalne narzędzia, wspierające zarówno jakość kodu, jak i efektywność pracy zespołu.
+
+W dalszych rozdziałach pracy przedstawiono analizę istniejących narzędzi do generowania kodu w .NET, omówiono założenia projektowe oraz opisano proces implementacji generatora i biblioteki. Praca kończy się prezentacją wyników, oceną użyteczności rozwiązania oraz propozycjami dalszego rozwoju narzędzia.
