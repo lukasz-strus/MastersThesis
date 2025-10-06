@@ -3,6 +3,73 @@
 Wprowadzenie teoretyczne stanowi fundament dla zrozumienia koncepcji i narzędzi omawianych w pracy. W tym rozdziale przedstawione zostaną kluczowe pojęcia związane z Domain-Driven Design (DDD) oraz Clean Architecture, a także omówione zostaną podstawowe zasady i wzorce projektowe, które stanowią podstawę dla tworzenia skalowalnych i łatwych w utrzymaniu systemów informatycznych.
 
 \subsection{Domain-Driven Design}
+Koncepcja Domain-Driven Design (DDD), tłumaczona na język polski jako projektowanie sterowane domeną, została po raz pierwszy sformułowana przez Erica Evansa w publikacji Domain-Driven Design: Tackling Complexity in the Heart of Software \cite{evans2004ddd}. Podejście to stanowi odpowiedź na rosnącą złożoność współczesnych systemów informatycznych, w których tradycyjne metody projektowania często nie pozwalają na utrzymanie spójności pomiędzy modelem domeny biznesowej a jego implementacją w kodzie źródłowym.
+
+\subsubsection{Założenia DDD}
+Zgodnie z założeniami Evansa, kluczowym celem DDD jest ścisłe powiązanie modelu oprogramowania z logiką biznesową, tak aby struktura kodu odzwierciedlała sposób myślenia ekspertów dziedzinowych. Model domenowy ma stanowić centralny element architektury systemu, a jego projekt powinien wynikać z dogłębnego zrozumienia procesów zachodzących w danej domenie problemu.
+
+Podstawowe założenia paradygmatu Domain-Driven Design można sformułować następująco:
+\begin{enumerate}
+    \item \textbf{Koncentracja na domenie i logice biznesowej} \newline
+    DDD zakłada, że najistotniejszym aspektem systemu informatycznego jest jego domena, czyli obszar rzeczywistości, który system ma wspierać lub odwzorowywać. Struktura kodu powinna w sposób możliwie bezpośredni odzwierciedlać pojęcia i procesy występujące w tej domenie. Projektowanie systemu powinno więc koncentrować się nie na technologii, lecz na zrozumieniu zasad funkcjonowania dziedziny, którą oprogramowanie obsługuj \cite{evans2004ddd}.
+    \item \textbf{Model domeny jako centralny element architektury} \newline
+    Model domenowy, rozumiany jako ustrukturyzowany zbiór pojęć reprezentujących procesy, reguły i obiekty domenowe, stanowi trzon całego systemu. Pozostałe warstwy architektury - takie jak warstwa aplikacyjna, infrastrukturalna czy prezentacji - powinny wspierać model, nie zaś go determinować \cite{vernon2013ddd}. Takie podejście sprzyja niezależności logiki domenowej od aspektów technicznych, zwiększając elastyczność i możliwość adaptacji systemu.
+    \item \textbf{Język wszechobecny (ang. Ubiquitous Language)} \newline
+    Jednym z filarów DDD jest wspólny język wykorzystywany zarówno przez programistów, jak i ekspertów domenowych. Terminologia tego języka powinna być spójna w dokumentacji, kodzie źródłowym, testach i komunikacji w zespole. Dzięki temu eliminuje się rozbieżności semantyczne między światem biznesu a światem technicznym, co ułatwia współpracę interdyscyplinarną i minimalizuje ryzyko błędnej interpretacji wymagań \cite{vernon2013ddd}\cite{khononov2021ddd}.
+    \item \textbf{Iteracyjne i ewolucyjne doskonalenie modelu)} \newline
+    W podejściu DDD model domenowy nie jest strukturą statyczną – powinien ewoluować wraz ze wzrostem wiedzy o domenie. Proces ten obejmuje refaktoryzację kodu, analizę nowych przypadków biznesowych oraz modyfikację modelu w celu lepszego odwzorowania rzeczywistości \cite{khononov2021ddd}. Model traktowany jest zatem jako artefakt żywy, podlegający ciągłemu doskonaleniu.
+    \item \textbf{Wydzielanie kontekstów ograniczonych (ang. Bounded Contexts)} \newline
+    W złożonych systemach informatycznych często niemożliwe jest utrzymanie jednolitego modelu domenowego. DDD wprowadza zatem pojęcie kontekstu ograniczonego, który wyznacza granice obowiązywania danego modelu i jego terminologii. Każdy kontekst posiada własną semantykę, niezależne reguły biznesowe oraz model danych. Relacje pomiędzy kontekstami są jawnie definiowane, co pozwala uniknąć niejednoznaczności i kolizji pojęciowych \cite{vernon2013ddd} \cite{brandolini2019eventstorming}.
+\end{enumerate}
+
+\subsubsection{Główne składniki modelu domenowego}
+Model domenowy w ujęciu Domain-Driven Design (DDD) stanowi centralny element architektury systemu, odzwierciedlający kluczowe pojęcia, reguły i zależności obowiązujące w danej dziedzinie problemowej. W celu zapewnienia jego spójności i jednoznaczności, Eric Evans \cite{evans2004ddd} zdefiniował zestaw tzw. building blocks- podstawowych elementów konstrukcyjnych, które umożliwiają systematyczne odwzorowanie logiki biznesowej w kodzie programu. Do najważniejszych z nich należą: encje, obiekty wartości (Value Objects), agregaty, zdarzenia domenowe (Domain Events), serwisy domenowe (Domain Services), fabryki (Factories) oraz repozytoria (Repositories).
+
+\begin{itemize}
+    \item \textbf{Encje (Entities)} \newline
+    Encje stanowią podstawowe elementy modelu domenowego, które są identyfikowane na podstawie swojej tożsamości, a nie wartości atrybutów \cite{evans2004ddd}. Oznacza to, że obiekty tego typu pozostają tym samym bytem niezależnie od zmian swojego stanu wewnętrznego. Każda encja posiada unikalny identyfikator (np. Id), który odróżnia ją od innych obiektów w systemie.
+    \newline
+    Z punktu widzenia projektowego encje są z reguły obiektami mutowalnymi, co oznacza, że ich stan może ulegać zmianom w trakcie cyklu życia. Ważnym aspektem jest również to, że porównanie encji odbywa się poprzez identyfikator, a nie przez zestaw właściwości \cite{vernon2013ddd}.
+    \newline
+    W praktyce do klasycznych przykładów encji należą takie obiekty, jak \textit{Zamówienie (Order)}, \textit{Klient (Customer)} czy \textit{Produkt (Product)}, czyli elementy systemu, które muszą być jednoznacznie identyfikowalne i posiadają określony cykl życia.
+    \item \textbf{Obiekty wartości (Value Objects)} \newline
+    Drugim fundamentalnym elementem modelu domenowego są obiekty wartości, reprezentujące pojęcia, których tożsamość nie jest istotna — znaczenie ma wyłącznie ich wartość. Są to obiekty niemutowalne, tworzone i porównywane wyłącznie na podstawie ich właściwości \cite{evans2004ddd}\cite{khononov2021ddd}.
+    \newline
+    Obiekty wartości stosuje się w sytuacjach, gdy dana informacja ma znaczenie kontekstowe i nie wymaga trwałej identyfikacji w systemie. Przykładem może być \textit{Adres (Address)}, \textit{Kwota (Money)}, \textit{Wymiary (Dimensions)} czy \textit{Data (Date)}.
+    \newline
+    Zgodnie z dobrymi praktykami DDD, zaleca się preferowanie obiektów wartości nad encjami wszędzie tam, gdzie jest to możliwe, ponieważ sprzyjają one większej przejrzystości kodu, ograniczają błędy logiczne oraz ułatwiają utrzymanie niezmienności modelu \cite{vernon2013ddd}.
+    \item \textbf{Agregaty i korzeń agregatu (Aggregates, Aggregate Root)} \newline
+    Wraz ze wzrostem złożoności modelu domenowego pojawia się potrzeba grupowania obiektów w logiczne całości. W tym celu wprowadzono pojęcie agregatu (Aggregate) - jednostki spójności obejmującej powiązane encje i obiekty wartości, które razem reprezentują określoną koncepcję biznesową \cite{evans2004ddd}\cite{vernon2013ddd}.
+    \newline
+    Każdy agregat posiada jeden korzeń (Aggregate Root), czyli główną encję będącą punktem dostępu do pozostałych elementów w ramach agregatu. Operacje z zewnątrz powinny być wykonywane wyłącznie poprzez korzeń agregatu, co gwarantuje zachowanie integralności danych i reguł biznesowych.
+    \newline
+    Agregat stanowi również granicę transakcyjną - zmiany w jego obrębie powinny być spójne i zatwierdzane w ramach jednej transakcji. Zbyt rozbudowane agregaty mogą jednak prowadzić do problemów z wydajnością, dlatego w literaturze podkreśla się potrzebę zachowania równowagi pomiędzy spójnością a skalowalnością \cite{khononov2021ddd}.
+    \newline
+    Przykładowo, agregat \textit{Zamówienie (Order)} może zawierać kolekcję \textit{Pozycji zamówienia (OrderItem)} jako elementy wewnętrzne, przy czym tylko \textit{Zamówienie} pełni rolę korzenia agregatu.
+    \item \textbf{Zdarzenia domenowe (Domain Events)} \newline
+    Zdarzenia domenowe reprezentują fakty, które zaszły w domenie i mają znaczenie biznesowe, np. „Zamówienie zostało opłacone” \textit{(OrderPaid)} lub „Użytkownik został zarejestrowany” \textit{(UserRegistered)}. Zdarzenia te są niemutowalne i zazwyczaj publikowane po dokonaniu zmian w agregacie.
+    \newline
+    Ich głównym celem jest umożliwienie luźnego powiązania komponentów systemu — inne moduły mogą reagować na zdarzenia bez konieczności bezpośredniego wywoływania metod na obiektach. Dzięki temu architektura staje się bardziej modularna i elastyczna \cite{khononov2021ddd}.
+    \newline
+    W praktyce zdarzenia domenowe są często wykorzystywane do implementacji mechanizmów integracyjnych (np. komunikacji pomiędzy kontekstami ograniczonymi) oraz do wspierania podejść opartych na architekturze zdarzeniowej (Event-Driven Architecture).
+    \item \textbf{Serwisy domenowe (Domain Services)} \newline
+    Niektóre operacje biznesowe nie mogą być przypisane jednoznacznie do żadnej encji lub obiektu wartości. W takich przypadkach stosuje się serwisy domenowe, które modelują logikę operacyjną przekraczającą granice pojedynczych obiektów \cite{evans2004ddd}.
+    \newline
+    Serwisy domenowe powinny być bezzmiennikowe (stateless), a ich metody operować w terminach pojęć domenowych. Typowym przykładem może być serwis obliczający koszt dostawy lub generujący raport z zamówień.
+    \newline
+    Zastosowanie serwisów domenowych pozwala uniknąć nadmiernego obciążania encji logiką niezwiązaną bezpośrednio z ich stanem wewnętrznym, co sprzyja zachowaniu czystości i wysokiej kohezji modelu \cite{vernon2013ddd}.
+    \item \textbf{Fabryki (Factories)} \newline
+    Fabryki są wzorcem kreacyjnym wykorzystywanym w DDD do tworzenia złożonych obiektów domenowych - w szczególności agregatów - w sposób zapewniający ich poprawną inicjalizację i zachowanie reguł niezmienników (invariants) \cite{evans2004ddd}.
+    \newline
+    Zastosowanie fabryk eliminuje konieczność przenoszenia złożonej logiki konstrukcji obiektów do ich konstruktorów, co zwiększa czytelność kodu i ułatwia utrzymanie zasad spójności domeny. Fabryki mogą przyjmować różne formy - od prostych metod statycznych po wyspecjalizowane klasy, np. \textit{OrderFactory} czy \textit{UserFactory}.
+    \item \textbf{Repozytoria (Repositories)} \newline
+    Repozytoria pełnią rolę pośrednika pomiędzy warstwą domenową a mechanizmem trwałości danych. Zapewniają one abstrakcję nad sposobem przechowywania obiektów domenowych, oferując interfejs przypominający kolekcję, z operacjami takimi jak \textit{Add}, \textit{Remove} czy \textit{GetById} \cite{vernon2013ddd}.
+    \newline
+    Repozytoria umożliwiają programiście manipulowanie agregatami w sposób niezależny od szczegółów implementacyjnych (np. bazy danych czy ORM-a). W ramach dobrych praktyk każde repozytorium powinno obsługiwać wyłącznie jeden typ agregatu, co sprzyja zachowaniu spójności i czytelności architektury \cite{khononov2021ddd}.
+\end{itemize}
+
+Zastosowanie powyższych elementów konstrukcyjnych pozwala na tworzenie modeli domenowych o wysokim poziomie abstrakcji, które są jednocześnie zgodne z regułami biznesowymi i odporne na zmiany technologiczne. W praktyce ich właściwe odwzorowanie w kodzie stanowi klucz do sukcesu implementacji DDD w środowiskach komercyjnych, szczególnie w połączeniu z zasadami Clean Architecture \cite{unclebob2018cleanarchitecture} oraz podejściem Test-Driven Development \cite{beck2003tdd}.
+
 
 \subsection{Clean Architecture}
 
